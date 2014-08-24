@@ -64,7 +64,7 @@ if __name__ == "__main__":
 	pass_image_data = 1;
 	detector_type = 'fast'; # choose from: fast, dog, box_filters
 	descriptor_type = 'freak'; # choose from: freak, surf, orb
-	visualize_results = 1
+	visualize_results = 1;
 
 	root_directory_path = os.path.dirname(os.path.realpath(__file__))
 	pictures_directory = root_directory_path + '/../sample_images/';
