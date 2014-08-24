@@ -1,4 +1,4 @@
-import sys, Image, math, random
+import os, sys, Image, math, random
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
@@ -56,25 +56,25 @@ def read_images( image_paths_and_data ):
 	computed_images = [None]*len( image_paths_and_data )
 	for i in range( len(image_paths_and_data) ):
 		cur_img_path = image_paths_and_data[i][0]
-		print( cur_img_path )
 		img = cv2.imread( cur_img_path, 0 )
 		computed_images[i] = img
 	return computed_images
 
 if __name__ == "__main__":
-	pictures_directory = '/home/kyle/Pictures/Webcam/';
 	pass_image_data = 1;
-	detector_type = 'dog'; # choose from: fast, dog, box_filters
-	descriptor_type = 'surf'; # choose from: freak, surf, orb
+	detector_type = 'fast'; # choose from: fast, dog, box_filters
+	descriptor_type = 'freak'; # choose from: freak, surf, orb
 	visualize_results = 1
 
+	root_directory_path = os.path.dirname(os.path.realpath(__file__))
+	pictures_directory = root_directory_path + '/../sample_images/';
 	image_paths = [ "{0}2014-08-22-223833.jpg".format(pictures_directory), "{0}2014-08-22-223845.jpg".format(pictures_directory), '{0}2014-08-23-160154.jpg'.format(pictures_directory), '{0}2014-08-23-160204.jpg'.format(pictures_directory), '{0}2014-08-23-160435.jpg'.format(pictures_directory) ];
 	image_paths_and_data = setup_image_data_and_paths( image_paths, pass_image_data )
 	output = call_feature_descriptor_methods.process_multiple_images_python( image_paths_and_data, detector_type, descriptor_type )
 	keypoints_list = output[0]
 	matches_list = output[1]
 	if len( keypoints_list ) != (len( matches_list ) + 1):
-		raise Exception( "Keypoints and matches are not of the correct length" )
+		raise Exception( "Returned keypoints and matches are not of the correct length" )
 	if visualize_results == 1:
 		computed_images = read_images( image_paths_and_data )
 		for i in range( len(matches_list) ):
@@ -85,7 +85,6 @@ if __name__ == "__main__":
 			img_path_and_data_2 = image_paths_and_data[i+1]
 			img1 = computed_images[i]
 			img2 = computed_images[i+1]
-			# cv2.drawMatchesKnn expects list of lists as matches.
 			h1, w1 = img1.shape[:2]
 			h2, w2 = img2.shape[:2]
 			view = sp.zeros((max(h1, h2), w1 + w2, 3), sp.uint8)
