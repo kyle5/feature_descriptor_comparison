@@ -1,3 +1,5 @@
+#include "Python.h"
+
 #include <stdexcept>
 #include <vector>
 #include <string>
@@ -6,8 +8,6 @@
 #include <algorithm>
 
 #include <cstdio>
-
-#include "Python.h"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/features2d/features2d.hpp>
